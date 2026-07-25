@@ -29,6 +29,6 @@ Open your terminal and run:
 2. Drop `ffmpeg.exe` into a `utils` folder inside your mpv directory:  
    `C:\Users\<YourName>\AppData\Roaming\mpv\utils\ffmpeg.exe`
 
-**Option C: Manually set a Path in dual_subs.js
+**Option C: Manually set a Path in dual_subs.js**
 1. Open Dual_subs.js with a text editor (notepad/notepad++)
 2. Look for ffmpeg_path: "" and put a path inside the brackets (e.g.) ffmpeg_path: "C:/ffmpeg/bin/ffmpeg.exe"

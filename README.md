@@ -3,9 +3,17 @@
 # mpv-signs-songs-automerge
 An mpv script that lets you merge primary subs with a secondary signs/songs/karaoke track without breaking typesetting or positioning. If no Secondary Subtitle track is selected, it searches automatically for a signs or songs track.
 
+Additionally lets you strip a secondary track of all dialogue, leaving only the signs&songs lines in tact.
+
 Usage:
+Shift+f and shift+G will resize the primary subtitle while keeping the Secondary subtitles at the original size.  
+Delete mp.add_key_binding at the bottom of the script to disable this behavior.
 
 Press ctrl+s to merge the secondary and primary subtitle file. If secondary subtitle is empty then the script will look for a track called signs or signs&songs.
+Press Ctrl+shift+s to Strip secondary track of all dialogue and merge with Primary subtitle file.
+
+F12 to time the first dialogue of the primary track to current time on the video player, merge afterwards to inherit the sub delay (won't apply to secondary track).
+
 
 
 

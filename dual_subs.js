@@ -331,21 +331,32 @@ function fastScaleAssInPlace(filePath, multiplier) {
     return true;
 }
 
-function isMergedTrackActive() {
+function getActiveMergedTrackPath() {
     var tracks = mp.get_property_native("track-list");
-    if (!tracks) return false;
+    if (!tracks) return null;
     for (var i = 0; i < tracks.length; i++) {
-        if (tracks[i].type === "sub" && tracks[i].selected && tracks[i].external && 
-            tracks[i]["external-filename"] && tracks[i]["external-filename"].indexOf("merged_live.ass") !== -1) {
-            return true;
+        if (tracks[i].type === "sub" && tracks[i].selected && tracks[i].external && tracks[i]["external-filename"]) {
+            var fn = tracks[i]["external-filename"];
+            if (fn.indexOf("merged_live.ass") !== -1) return fn;
+            if (fn.toLowerCase().indexOf(".ass") !== -1) {
+                try {
+                    var content = mp.utils.read_file(fn);
+                    if (content && content.indexOf("Sec_") !== -1) return fn;
+                } catch(e) {}
+            }
         }
     }
-    return false;
+    return null;
+}
+
+function isMergedTrackActive() {
+    return getActiveMergedTrackPath() !== null;
 }
 
 function handleSmartScale(multiplier) {
-    if (isMergedTrackActive()) {
-        fastScaleAssInPlace(save_path + "merged_live.ass", multiplier);
+    var activePath = getActiveMergedTrackPath();
+    if (activePath) {
+        fastScaleAssInPlace(activePath, multiplier);
         notify("Primary Subtitles Scaled!");
     } else {
         mp.commandv("add", "sub-scale", multiplier > 1 ? 0.1 : -0.1);
